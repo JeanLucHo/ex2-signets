@@ -1,12 +1,23 @@
 import dossTab from '../data/liste-dossiers.json';
 import Dossier from './Dossier';
+import './sass/ListeDossiers.scss';
+import Sortable from 'sortablejs';
+import { useEffect, useRef } from 'react';
 
 export default function ListeDossiers() {
+
+  const liste = useRef(null);
+
+  useEffect(()=>{
+    Sortable.create(liste.current);
+  },[dossTab])
+
+
   return (
-    <ul className="ListeDossiers">
+    <ul className="ListeDossiers" ref={liste}>
       {
         dossTab.map( 
-          dossier =>  <li><Dossier key={dossier.id} {...dossier} /></li>
+          dossier =>  <li key={dossier.id} ><Dossier key={dossier.id} {...dossier} /></li>
         )
       }
     </ul>
